@@ -1,4 +1,4 @@
-package com.example.fsm.manogotchi;
+//package com.example.fsm.manogotchi;
 
 import java.util.HashMap;
 /**
@@ -11,7 +11,7 @@ public class Person {
     private int fitness;
     private int age;
     private boolean alive = true;
-    private HashMap<Activity, Integer> Activities;
+    private HashMap<Activity, Integer> Activities = new HashMap<Activity, Integer>();
 
     public enum Activity {SLEEP, WORKOUT, COMEDOWN}
 
@@ -66,60 +66,94 @@ public class Person {
     public void doSomething(){
         //this is what the pupil will fill out
         if (hunger > 50){
-            consume(Food.FRUIT);
+            System.out.println("ate fruit");
+            while (hunger > 20) {
+                consume(Food.FRUIT);
+            }
         }
         if (happiness < 20){
+            System.out.println("ate chocolate");
             consume(Food.CHOCOLATE);
         }
         if (fitness < 60) {
-            doSomething(Activity.WORKOUT);
+            System.out.println("worked out");
+            doActivity(Activity.WORKOUT);
         }
         if (tiredness > 70){
             sleep(6);
         }
     }
 
-    public void runHour(){
-        //TODO check alive
+    public int runHour(){
+        checkLife();
+        if (!alive){
+            return -1;
+        }
+
         //update activities list
         Integer sleeping = Activities.get(Activity.SLEEP);
-        if (sleeping != null){
+        if (sleeping != null) {
             //end of sleep
-            if (sleeping.equals(0)){
+            if (sleeping.equals(0)) {
                 //stop sleeping and carry on
                 Activities.remove(Activity.SLEEP);
             } else {
                 //sleep and decay for hour
-                Activities.put(Activity.SLEEP,(sleeping-1));
-                tiredness -= 10;
-                //TODO decay person stats
+                Activities.put(Activity.SLEEP, (sleeping - 1));
+                changeTiredness(-15);
+                decayPerson();
                 age++;
-                return;
+                System.out.println("sleeping");
+                return 0;
             }
         }
 
+
         //TODO comedowns
 
-        //TODO decay person stats
+        decayPerson();
 
         //run pupil suggestion
         doSomething();
         age++;
+        return 1;
     }
 
-    public void sleep(int time) {
+    private void decayPerson(){
+        changeHunger(15);
+        changeTiredness(10);
+        changeHappiness(-5);
+        changeFitness(-5);
+    }
+
+    private void checkLife(){
+        if (hunger == 100 || tiredness == 100 || fitness == 0 || happiness == 0){
+            alive = false;
+        }
+    }
+
+    private void sleep(int time) {
         Activities.put(Activity.SLEEP, time);
     }
 
-    public void consume(Food food) {
+    private void consume(Food food) {
         changeTiredness(food.getTirednessFactor());
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());
         changeFitness(food.getFitnessFactor());
     }
 
-    public void doSomething(Activity activity){
-        //TODO
+    private void doActivity(Activity activity){
+        switch (activity){
+            case WORKOUT: {
+                changeFitness(10);
+                changeTiredness(-20);
+                changeHappiness(15);
+                changeHunger(20);
+                return;
+            }
+            default:return;
+        }
     }
 
     private void changeTiredness(int amount){
@@ -166,6 +200,10 @@ public class Person {
         }
     }
 
+    public boolean isAlive(){
+        return alive;
+    }
+
     public int getAge() {
         return age;
     }
@@ -204,5 +242,9 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void print(){
+        System.out.println("Age: " + age + "\ntiredness: " + tiredness + "\thunger: " + hunger + "\nhappiness: " + happiness + "\t fitness: " + fitness);
     }
 }
