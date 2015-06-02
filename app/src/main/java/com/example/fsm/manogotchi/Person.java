@@ -10,11 +10,12 @@ public class Person {
     private int happiness;
     private int fitness;
     private int age;
-    private HashMap<Activity, Integer> toDo;
+    private boolean alive = true;
+    private HashMap<Activity, Integer> Activities;
 
-    public enum Activity {SLEEP, COMEDOWN}
+    public enum Activity {SLEEP, WORKOUT, COMEDOWN}
 
-    public enum Food {FRUIT(0,0,0,2), CHOCOLATE(0,-10,10,-10), COCAINE(50,10,-10,-30);
+    public enum Food {FRUIT(0,-5,5,2), CHOCOLATE(5,-10,10,-10), COCAINE(-50,10,-10,-30);
 
         private int tirednessFactor;
         private int hungerFactor;
@@ -62,8 +63,52 @@ public class Person {
         age = 0;
     }
 
+    public void doSomething(){
+        //this is what the pupil will fill out
+        if (hunger > 50){
+            consume(Food.FRUIT);
+        }
+        if (happiness < 20){
+            consume(Food.CHOCOLATE);
+        }
+        if (fitness < 60) {
+            doSomething(Activity.WORKOUT);
+        }
+        if (tiredness > 70){
+            sleep(6);
+        }
+    }
+
+    public void runHour(){
+        //TODO check alive
+        //update activities list
+        Integer sleeping = Activities.get(Activity.SLEEP);
+        if (sleeping != null){
+            //end of sleep
+            if (sleeping.equals(0)){
+                //stop sleeping and carry on
+                Activities.remove(Activity.SLEEP);
+            } else {
+                //sleep and decay for hour
+                Activities.put(Activity.SLEEP,(sleeping-1));
+                tiredness -= 10;
+                //TODO decay person stats
+                age++;
+                return;
+            }
+        }
+
+        //TODO comedowns
+
+        //TODO decay person stats
+
+        //run pupil suggestion
+        doSomething();
+        age++;
+    }
+
     public void sleep(int time) {
-        toDo.put(Activity.SLEEP, time);
+        Activities.put(Activity.SLEEP, time);
     }
 
     public void consume(Food food) {
@@ -71,6 +116,10 @@ public class Person {
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());
         changeFitness(food.getFitnessFactor());
+    }
+
+    public void doSomething(Activity activity){
+        //TODO
     }
 
     private void changeTiredness(int amount){
