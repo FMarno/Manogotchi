@@ -5,7 +5,7 @@ import java.util.HashMap;
  * Created by finlay on 01/06/15.
  */
 public class Person {
-    private int tiredness;
+    private int energy;
     private int hunger;
     private int happiness;
     private int fitness;
@@ -15,23 +15,23 @@ public class Person {
 
     public enum Activity {SLEEP, WORKOUT, COMEDOWN}
 
-    public enum Food {FRUIT(0,-5,5,2), CHOCOLATE(5,-10,10,-10), COCAINE(-50,10,-10,-30);
+    public enum Food {FRUIT(0,5,5,2), CHOCOLATE(-5,10,10,-10), COCAINE(50,-10,-10,-30);
 
-        private int tirednessFactor;
+        private int energyFactor;
         private int hungerFactor;
         private int happinessFactor;
         private int fitnessFactor;
 
 
-        Food(int tirednessFactor, int hungerFactor, int happinessFactor, int fitnessFactor) {
-            this.tirednessFactor = tirednessFactor;
+        Food(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor) {
+            this.energyFactor = energyFactor;
             this.hungerFactor = hungerFactor;
             this.happinessFactor = happinessFactor;
             this.fitnessFactor = fitnessFactor;
         }
 
-        public int getTirednessFactor() {
-            return tirednessFactor;
+        public int getEnergyFactor() {
+            return energyFactor;
         }
 
         public int getHungerFactor() {
@@ -47,8 +47,8 @@ public class Person {
         }
     }
 
-    public Person(int tiredness, int hunger, int happiness, int fitness, int age) {
-        this.tiredness = tiredness;
+    public Person(int energy, int hunger, int happiness, int fitness, int age) {
+        this.energy = energy;
         this.hunger = hunger;
         this.happiness = happiness;
         this.fitness = fitness;
@@ -56,8 +56,8 @@ public class Person {
     }
 
     public Person() {
-        tiredness = 0;
-        hunger = 0;
+        energy = 70;
+        hunger = 70;
         happiness = 100;
         fitness = 70;
         age = 0;
@@ -67,7 +67,7 @@ public class Person {
         //this is what the pupil will fill out
         if (hunger > 50){
             System.out.println("ate fruit");
-            while (hunger > 20) {
+            while (hunger < 80) {
                 consume(Food.FRUIT);
             }
         }
@@ -79,7 +79,7 @@ public class Person {
             System.out.println("worked out");
             doActivity(Activity.WORKOUT);
         }
-        if (tiredness > 70){
+        if (energy < 11){
             sleep(6);
         }
     }
@@ -100,7 +100,7 @@ public class Person {
             } else {
                 //sleep and decay for hour
                 Activities.put(Activity.SLEEP, (sleeping - 1));
-                changeTiredness(-15);
+                changeEnergy(20);
                 decayPerson();
                 age++;
                 System.out.println("sleeping");
@@ -120,14 +120,14 @@ public class Person {
     }
 
     private void decayPerson(){
-        changeHunger(15);
-        changeTiredness(10);
+        changeHunger(-15);
+        changeEnergy(-10);
         changeHappiness(-5);
         changeFitness(-5);
     }
 
     private void checkLife(){
-        if (hunger == 100 || tiredness == 100 || fitness == 0 || happiness == 0){
+        if (hunger == 0 || energy == 0 || fitness == 0 || happiness == 0){
             alive = false;
         }
     }
@@ -137,7 +137,7 @@ public class Person {
     }
 
     private void consume(Food food) {
-        changeTiredness(food.getTirednessFactor());
+        changeEnergy(food.getEnergyFactor());
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());
         changeFitness(food.getFitnessFactor());
@@ -147,7 +147,7 @@ public class Person {
         switch (activity){
             case WORKOUT: {
                 changeFitness(10);
-                changeTiredness(-20);
+                changeEnergy(20);
                 changeHappiness(15);
                 changeHunger(20);
                 return;
@@ -156,14 +156,14 @@ public class Person {
         }
     }
 
-    private void changeTiredness(int amount){
-        int newT = tiredness + amount;
+    private void changeEnergy(int amount){
+        int newT = energy + amount;
         if (newT < 0){
-            tiredness = 0;
+            energy = 0;
         } else if (newT > 100){
-            tiredness = 100;
+            energy = 100;
         } else {
-            tiredness = newT;
+            energy = newT;
         }
     }
 
@@ -220,12 +220,12 @@ public class Person {
         return happiness;
     }
 
-    public int getTiredness() {
-        return tiredness;
+    public int getEnergy() {
+        return energy;
     }
 
-    public void setTiredness(int tiredness) {
-        this.tiredness = tiredness;
+    public void setEnergy(int energy) {
+        this.energy = energy;
     }
 
     public void setHunger(int hunger) {
@@ -245,6 +245,6 @@ public class Person {
     }
 
     public void print(){
-        System.out.println("Age: " + age + "\ntiredness: " + tiredness + "\thunger: " + hunger + "\nhappiness: " + happiness + "\t fitness: " + fitness);
+        System.out.println("Age: " + age + "\nenergy: " + energy + "\thunger: " + hunger + "\nhappiness: " + happiness + "\t fitness: " + fitness);
     }
 }
