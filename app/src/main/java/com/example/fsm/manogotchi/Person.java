@@ -29,7 +29,7 @@ public class Person {
 
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
-    public enum Consumable {FRUIT(0,5,5,2), CHOCOLATE(5,10,10,-10), VODKA(-20,-30, 30, 0);
+    public enum Consumable {FRUIT(0,5,5,2), CHOCOLATE(5,10,10,-10), COFFEE(20, 0, 5, 0), VODKA(-20,-30, 30, 0);
 
         private int energyFactor;
         private int hungerFactor;
@@ -93,7 +93,7 @@ public class Person {
             //System.out.println("worked out");
             doActivity(Activity.WORKOUT);
         }
-        if (energy < 11){
+        if (energy < 20){
             sleep(6);
         }
     }
@@ -104,7 +104,6 @@ public class Person {
         if (!alive){
             return -1;
         }
-
 
         if (checkAffects() == 0){
             return 0;
@@ -120,6 +119,41 @@ public class Person {
 
     private int checkAffects(){
         //update activities list
+
+        //comedown
+        Integer comedown = affects.get(Affect.COMEDOWN);
+        if (comedown != null){
+            if (comedown.equals(0)){
+                changeHunger(-2);
+                changeEnergy(-25);
+                changeHappiness(-2);
+                changeFitness(-1);
+                affects.remove(Affect.COMEDOWN);
+            } else {
+                affects.put(Affect.COMEDOWN, (comedown-1));
+                System.out.println("coffee buzz");
+                return 1;
+            }
+        }
+
+        //hangover
+        Integer hangover = affects.get(Affect.HANGOVER);
+        if (hangover != null){
+            if (comedown.equals(0)){
+                affects.remove(Affect.HANGOVER);
+            } else {
+                affects.put(Affect.HANGOVER, (comedown-1));
+                if (hangover < 5){
+                    System.out.println("hangover");
+                    changeHunger(-10);
+                    changeEnergy(-10);
+                    changeHappiness(-10);
+                    changeFitness(-10);
+                }
+            }
+        }
+
+        //sleep
         Integer sleeping = affects.get(Affect.SLEEP);
         if (sleeping != null) {
             //end of sleep
@@ -137,8 +171,6 @@ public class Person {
             }
         }
         return 1;
-
-        //TODO comedowns
     }
 
     private void recordState() {
@@ -151,14 +183,19 @@ public class Person {
     }
 
     private void decayPerson(){
-        changeHunger(-15);
-        changeEnergy(-10);
-        changeHappiness(-5);
-        changeFitness(-5);
+        double changeInHunger = (0.1*hunger) + (0.05*(100-energy)) + (0.1*(Math.abs(50-fitness)));
+        double changeInEnergy = (0.1*energy) + (0.1*(100-hunger)) + (0.2*(100-happiness)) + (0.2*(100-fitness));
+        double changeInHappiness = (0.1*(100-happiness)) + (0.1*(100-hunger)) + (0.05*(100-energy)) + (0.05*(100-fitness));
+        double changeInFitness = (0.1*(100-fitness)) + (0.2*(100-hunger)) + (0.07*(100-energy));
+
+        changeHunger(-1*(int)Math.round(changeInHunger));
+        changeEnergy(-1*(int)Math.round(changeInHunger));
+        changeHappiness(-1*(int)Math.round(changeInHunger));
+        changeFitness(-1*(int)Math.round(changeInHunger));
     }
 
     private void checkLife(){
-        if (hunger == 0 || energy == 0 || fitness == 0 || happiness == 0){
+        if (hunger == 0 || energy == 0 || fitness == 0 || happiness == 0) {
             alive = false;
         }
     }
@@ -172,15 +209,28 @@ public class Person {
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());
         changeFitness(food.getFitnessFactor());
+
+        switch (food){
+            case VODKA: {affects.put(Affect.HANGOVER,10); break;}
+            case COFFEE: {affects.put(Affect.COMEDOWN,2);}
+        }
+
     }
 
     private void doActivity(Activity activity){
         switch (activity){
             case WORKOUT: {
                 changeFitness(10);
-                changeEnergy(20);
+                changeEnergy(-20);
                 changeHappiness(15);
-                changeHunger(20);
+                changeHunger(-20);
+                return;
+            }
+            case WATCH_TV:{
+                changeFitness(-5);
+                changeEnergy(0);
+                changeHappiness(5);
+                changeHunger(0);
                 return;
             }
             default:return;

@@ -27,8 +27,10 @@ public class MainActivity extends FragmentActivity {
         //Run sample of life choices
         runJimTest(jim);
         // Add hunger stats to graph
-        addToGraph(jim.getHungerStats(), R.id.graph);
-        addToGraph(jim.getFitnessStats(), R.id.graph);
+        addToGraph(jim.getHungerStats(), R.id.hunger);
+        addToGraph(jim.getFitnessStats(), R.id.fitness);
+        addToGraph(jim.getEnergyStats(), R.id.energy);
+        addToGraph(jim.getHappinessStats(), R.id.happiness);
 
 
     }
@@ -38,6 +40,10 @@ public class MainActivity extends FragmentActivity {
 
         //Use graph id to indicate which graph will be modified
         GraphView graph = (GraphView) findViewById(graph_id);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(100);
+        //graph.getViewport().setScalable(true);
 
         //Create a DataPoint array which plots the stats against time
         DataPoint[] data = new DataPoint[stats.size()];
