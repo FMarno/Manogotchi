@@ -27,10 +27,10 @@ public class MainActivity extends FragmentActivity {
         //Run sample of life choices
         runJimTest(jim);
         // Add hunger stats to graph
-        addToGraph(jim.getHungerStats(), R.id.hunger);
-        addToGraph(jim.getFitnessStats(), R.id.fitness);
-        addToGraph(jim.getEnergyStats(), R.id.energy);
-        addToGraph(jim.getHappinessStats(), R.id.happiness);
+        addToGraph(jim.getHungerStats(), R.id.graph);
+       // addToGraph(jim.getFitnessStats(), R.id.fitness);
+       // addToGraph(jim.getEnergyStats(), R.id.energy);
+        //addToGraph(jim.getHappinessStats(), R.id.happiness);
 
 
     }
