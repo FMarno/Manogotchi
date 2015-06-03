@@ -1,40 +1,23 @@
 package com.example.fsm.manogotchi;
 
-import android.app.Activity;
-import android.net.Uri;
+import android.app.FragmentManager;
+
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.*;
+import android.support.v4.view.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class TabContainerFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final int NUM_TABS = 2;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TabContainerFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TabContainerFragment newInstance(String param1, String param2) {
-        TabContainerFragment fragment = new TabContainerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
+    private ArrayList<Fragment> mPages = new ArrayList<>();
 
     public TabContainerFragment() {
         // Required empty public constructor
@@ -43,10 +26,11 @@ public class TabContainerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mPages.add(new HomeFragment());
+        mPages.add(new StatisticsFragment());
+
+
     }
 
     @Override
@@ -54,6 +38,36 @@ public class TabContainerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tab_container, container, false);
+
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mPager = (ViewPager) view.findViewById(R.id.content_slider);
+
+        mPagerAdapter = new ContentSliderPagerAdapter(getChildFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+    }
+
+    public void addToGraph(int stats[]){
+        ((StatisticsFragment)mPages.get(1)).addToGraph(stats);
+    }
+
+    private class ContentSliderPagerAdapter extends FragmentStatePagerAdapter{
+
+        public ContentSliderPagerAdapter(android.support.v4.app.FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return mPages.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_TABS;
+        }
+    }
 }

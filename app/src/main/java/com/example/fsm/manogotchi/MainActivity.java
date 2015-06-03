@@ -1,21 +1,13 @@
 package com.example.fsm.manogotchi;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.*;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import java.util.ArrayList;
-
-
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener{
 
     private Person jim;
 
@@ -28,7 +20,7 @@ public class MainActivity extends FragmentActivity {
         jim = new Person();
 
         // Add hunger stats to graph
-        addToGraph(jim.getHungerStats(), R.id.graph);
+        //addToGraph(jim.getHungerStats(), R.id.graph);
        // addToGraph(jim.getFitnessStats(), R.id.fitness);
        // addToGraph(jim.getEnergyStats(), R.id.energy);
         //addToGraph(jim.getHappinessStats(), R.id.happiness);
@@ -37,26 +29,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     //Method to add a stat set against time to graph
-    private void addToGraph(ArrayList<Integer> stats, int graph_id) {
 
-        //Use graph id to indicate which graph will be modified
-        GraphView graph = (GraphView) findViewById(graph_id);
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(100);
-        //graph.getViewport().setScalable(true);
-
-        //Create a DataPoint array which plots the stats against time
-        DataPoint[] data = new DataPoint[stats.size()];
-        for (int i = 0; i < stats.size(); i++) {
-            System.out.println(stats.get(i));
-            data[i] = new DataPoint(i, stats.get(i));
-        }
-
-        //Create the series object from the array and add to graph
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
-        graph.addSeries(series);
-    }
 
 
     @Override
@@ -81,6 +54,11 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+    }
+
     public void testBars(View view) {
 
 
@@ -95,5 +73,15 @@ public class MainActivity extends FragmentActivity {
         fitnessBar.setProgress(jim.getFitness());
         happinessBar.setProgress(jim.getHappiness());
 
+        TabContainerFragment tabs = (TabContainerFragment)getSupportFragmentManager().findFragmentById(R.id.tab_container);
+
+        int[] stats = {jim.getEnergy(), jim.getHunger(), jim.getFitness(), jim.getHappiness()};
+
+        tabs.addToGraph(stats);
+    }
+
+    @Override
+    public int[] getStatistics() {
+        return new int[0];
     }
 }
