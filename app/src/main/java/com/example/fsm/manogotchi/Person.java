@@ -1,4 +1,4 @@
-//package com.example.fsm.manogotchi;
+package com.example.fsm.manogotchi;
 
 import java.util.HashMap;
 /**
@@ -11,11 +11,13 @@ public class Person {
     private int fitness;
     private int age;
     private boolean alive = true;
-    private HashMap<Activity, Integer> Activities = new HashMap<Activity, Integer>();
+    private HashMap<Affect, Integer> affects = new HashMap<Affect, Integer>();
 
-    public enum Activity {SLEEP, WORKOUT, COMEDOWN}
+    public enum Activity {WORKOUT, WATCH_TV}
 
-    public enum Food {FRUIT(0,5,5,2), CHOCOLATE(-5,10,10,-10), COCAINE(50,-10,-10,-30);
+    public enum Affect {SLEEP, COMEDOWN, HANGOVER}
+
+    public enum Consumable {FRUIT(0,5,5,2), CHOCOLATE(5,10,10,-10), VODKA(-20,-30, 30, 0);
 
         private int energyFactor;
         private int hungerFactor;
@@ -23,7 +25,7 @@ public class Person {
         private int fitnessFactor;
 
 
-        Food(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor) {
+        Consumable(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor) {
             this.energyFactor = energyFactor;
             this.hungerFactor = hungerFactor;
             this.happinessFactor = happinessFactor;
@@ -58,7 +60,7 @@ public class Person {
     public Person() {
         energy = 70;
         hunger = 70;
-        happiness = 100;
+        happiness = 70;
         fitness = 70;
         age = 0;
     }
@@ -66,17 +68,17 @@ public class Person {
     public void doSomething(){
         //this is what the pupil will fill out
         if (hunger > 50){
-            System.out.println("ate fruit");
+            //System.out.println("ate fruit");
             while (hunger < 80) {
-                consume(Food.FRUIT);
+                consume(Consumable.FRUIT);
             }
         }
         if (happiness < 20){
-            System.out.println("ate chocolate");
-            consume(Food.CHOCOLATE);
+            //System.out.println("ate chocolate");
+            consume(Consumable.CHOCOLATE);
         }
         if (fitness < 60) {
-            System.out.println("worked out");
+            //System.out.println("worked out");
             doActivity(Activity.WORKOUT);
         }
         if (energy < 11){
@@ -90,26 +92,10 @@ public class Person {
             return -1;
         }
 
-        //update activities list
-        Integer sleeping = Activities.get(Activity.SLEEP);
-        if (sleeping != null) {
-            //end of sleep
-            if (sleeping.equals(0)) {
-                //stop sleeping and carry on
-                Activities.remove(Activity.SLEEP);
-            } else {
-                //sleep and decay for hour
-                Activities.put(Activity.SLEEP, (sleeping - 1));
-                changeEnergy(20);
-                decayPerson();
-                age++;
-                System.out.println("sleeping");
-                return 0;
-            }
+
+        if (checkAffects() == 0){
+            return 0;
         }
-
-
-        //TODO comedowns
 
         decayPerson();
 
@@ -117,6 +103,29 @@ public class Person {
         doSomething();
         age++;
         return 1;
+    }
+
+    private int checkAffects(){
+        //update activities list
+        Integer sleeping = affects.get(Affect.SLEEP);
+        if (sleeping != null) {
+            //end of sleep
+            if (sleeping.equals(0)) {
+                //stop sleeping and carry on
+                affects.remove(Affect.SLEEP);
+            } else {
+                //sleep and decay for hour
+                affects.put(Affect.SLEEP, (sleeping - 1));
+                changeEnergy(20);
+                decayPerson();
+                age++;
+                System.out.println("sleeping");
+                return 0;
+            }
+        }
+        return 1;
+
+        //TODO comedowns
     }
 
     private void decayPerson(){
@@ -133,10 +142,10 @@ public class Person {
     }
 
     private void sleep(int time) {
-        Activities.put(Activity.SLEEP, time);
+        affects.put(Affect.SLEEP, time);
     }
 
-    private void consume(Food food) {
+    private void consume(Consumable food) {
         changeEnergy(food.getEnergyFactor());
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());
