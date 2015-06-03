@@ -79,22 +79,22 @@ public class Person {
 
     public void doSomething(){
         //this is what the pupil will fill out
-        if (hunger > 50){
-            //System.out.println("ate fruit");
+        if (hunger < 50){
+            System.out.println("ate fruit");
             while (hunger < 80) {
                 consume(Consumable.FRUIT);
             }
         }
         if (happiness < 20){
-            //System.out.println("ate chocolate");
+            System.out.println("ate chocolate");
             consume(Consumable.CHOCOLATE);
         }
         if (fitness < 60) {
-            //System.out.println("worked out");
+            System.out.println("worked out");
             doActivity(Activity.WORKOUT);
         }
         if (energy < 20){
-            sleep(6);
+            sleep(4);
         }
     }
 
@@ -184,9 +184,9 @@ public class Person {
 
     private void decayPerson(){
         double changeInHunger = (0.1*hunger) + (0.05*(100-energy)) + (0.1*(Math.abs(50-fitness)));
-        double changeInEnergy = (0.1*energy) + (0.1*(100-hunger)) + (0.2*(100-happiness)) + (0.2*(100-fitness));
+        double changeInEnergy = (0.1*energy) + (0.1*(100-hunger)) + (0.2*(100-happiness)) + (0.2*(100-fitness)) + (age/1753160);
         double changeInHappiness = (0.1*(100-happiness)) + (0.1*(100-hunger)) + (0.05*(100-energy)) + (0.05*(100-fitness));
-        double changeInFitness = (0.1*(100-fitness)) + (0.2*(100-hunger)) + (0.07*(100-energy));
+        double changeInFitness = (0.1*(100-fitness)) + (0.2*(100-hunger)) + (0.07*(100-energy)) + (age/1753160);
 
         changeHunger(-1*(int)Math.round(changeInHunger));
         changeEnergy(-1*(int)Math.round(changeInHunger));
@@ -220,7 +220,7 @@ public class Person {
     private void doActivity(Activity activity){
         switch (activity){
             case WORKOUT: {
-                changeFitness(10);
+                changeFitness(20);
                 changeEnergy(-20);
                 changeHappiness(15);
                 changeHunger(-20);

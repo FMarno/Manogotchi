@@ -1,5 +1,10 @@
 package com.example.fsm.manogotchi;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,9 +20,14 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements SensorEventListener{
 
     private Person jim;
+    private float[] gravity = {0,0,0};
+    private float[] linear_acceleration = {0,0,0};
+
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,13 @@ public class MainActivity extends FragmentActivity {
        // addToGraph(jim.getFitnessStats(), R.id.fitness);
        // addToGraph(jim.getEnergyStats(), R.id.energy);
         //addToGraph(jim.getHappinessStats(), R.id.happiness);
+
+
+        //added sensors that do nothing
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this,mSensor,SensorManager.SENSOR_DELAY_GAME);
+
 
 
     }
@@ -96,4 +113,30 @@ public class MainActivity extends FragmentActivity {
         happinessBar.setProgress(jim.getHappiness());
 
     }
+
+    public void onSensorChanged(SensorEvent event){
+        // In this example, alpha is calculated as t / (t + dT),
+        // where t is the low-pass filter's time-constant and
+        // dT is the event delivery rate.
+
+        final float alpha = 0.8f;
+
+        // Isolate the force of gravity with the low-pass filter.
+        gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+        gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+        gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+
+        // Remove the gravity contribution with the high-pass filter.
+        linear_acceleration[0] = event.values[0] - gravity[0];
+        linear_acceleration[1] = event.values[1] - gravity[1];
+        linear_acceleration[2] = event.values[2] - gravity[2];
+        System.out.println("X " + event.values[0] + "\t\t Y " + event.values[1] + "\t\t Z " + event.values[2]);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
 }
