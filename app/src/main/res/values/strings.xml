@@ -4,4 +4,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="energy_label">Energy</string>
+    <string name="hunger_label">Hunger</string>
+    <string name="fitness_label">Fitness</string>
+    <string name="happiness_label">Happiness</string>
+    <string name="test_button">Test</string>
 </resources>
