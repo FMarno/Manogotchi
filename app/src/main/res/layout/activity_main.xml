@@ -114,6 +114,10 @@
             android:layout_height="wrap_content"
             android:onClick="testBars"
             android:text="@string/test_button" />
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:id="@+id/graph" />
 
     </LinearLayout>
     <View
@@ -121,15 +125,11 @@
         android:layout_height="match_parent"
         android:background="@color/separator_colour"
         />
-    <FrameLayout
-        android:id="@+id/sample_content_fragment"
-        android:layout_weight="2"
+    <fragment
+        android:name="com.example.fsm.manogotchi.TabContainerFragment"
+        android:id="@+id/tab_container"
         android:layout_width="0dp"
-        android:layout_height="match_parent" >
-        <com.jjoe64.graphview.GraphView
-            android:layout_width="match_parent"
-            android:layout_height="200dip"
-            android:id="@+id/graph" />
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_weight="2"/>
 
 </LinearLayout>
