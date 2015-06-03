@@ -6,13 +6,13 @@ package com.example.fsm.manogotchi;
  */
 public class Main {
     public static void main(String[] args){
-        Person jim = new Person();
-        jim.print();
-        while (jim.runHour() != -1){
-            jim.print();
-            System.out.println();
-        }
-        System.out.println("Jim died!");
-        jim.print();
+//        Person jim = new Person();
+//        jim.print();
+//        while (jim.runHour() != -1){
+//            jim.print();
+//            System.out.println();
+//        }
+//        System.out.println("Jim died!");
+//        jim.print();
     }
 }
