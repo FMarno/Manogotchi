@@ -17,15 +17,16 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
+    private Person jim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Create test person
-        Person jim = new Person();
-        //Run sample of life choices
-        runJimTest(jim);
+        jim = new Person();
+
         // Add hunger stats to graph
         addToGraph(jim.getHungerStats(), R.id.graph);
        // addToGraph(jim.getFitnessStats(), R.id.fitness);
@@ -58,19 +59,6 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    private void runJimTest(Person jim) {
-
-        jim.print();
-
-        while (jim.runHour() != -1) {
-            jim.print();
-            System.out.println();
-        }
-
-        System.out.println("Jim died!");
-        jim.print();
-
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,8 +82,18 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void testBars(View view) {
-        ProgressBar energyBar = (ProgressBar) findViewById(R.id.energy_bar);
 
-        energyBar.setProgress(energyBar.getProgress() - 1);
+
+        ProgressBar energyBar = (ProgressBar) findViewById(R.id.energy_bar);
+        ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hunger_bar);
+        ProgressBar fitnessBar = (ProgressBar) findViewById(R.id.fitness_bar);
+        ProgressBar happinessBar = (ProgressBar) findViewById(R.id.happiness_bar);
+
+        jim.runHour();
+        energyBar.setProgress(jim.getEnergy());
+        hungerBar.setProgress(jim.getHunger());
+        fitnessBar.setProgress(jim.getFitness());
+        happinessBar.setProgress(jim.getHappiness());
+
     }
 }
