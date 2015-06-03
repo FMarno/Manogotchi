@@ -1,15 +1,27 @@
 package com.example.fsm.manogotchi;
 
+import android.content.Intent;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+
+
 /**
  * Created by finlay on 01/06/15.
  */
 public class Person {
+
     private int energy;
     private int hunger;
     private int happiness;
     private int fitness;
     private int age;
+
+    private ArrayList<Integer> energy_stats = new ArrayList<>();
+    private ArrayList<Integer> hunger_stats = new ArrayList<>();
+    private ArrayList<Integer> happiness_stats = new ArrayList<>();
+    private ArrayList<Integer> fitness_stats = new ArrayList<>();
+
     private boolean alive = true;
     private HashMap<Affect, Integer> affects = new HashMap<Affect, Integer>();
 
@@ -87,6 +99,7 @@ public class Person {
     }
 
     public int runHour(){
+        recordState();
         checkLife();
         if (!alive){
             return -1;
@@ -126,6 +139,15 @@ public class Person {
         return 1;
 
         //TODO comedowns
+    }
+
+    private void recordState() {
+
+        energy_stats.add(energy);
+        hunger_stats.add(hunger);
+        happiness_stats.add(happiness);
+        fitness_stats.add(fitness);
+
     }
 
     private void decayPerson(){
@@ -251,6 +273,22 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public ArrayList<Integer> getFitnessStats() {
+        return fitness_stats;
+    }
+
+    public ArrayList<Integer> getHungerStats() {
+        return hunger_stats;
+    }
+
+    public ArrayList<Integer> getHappinessStats() {
+        return happiness_stats;
+    }
+
+    public ArrayList<Integer> getEnergyStats() {
+        return energy_stats;
     }
 
     public void print(){
