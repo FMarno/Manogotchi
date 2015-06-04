@@ -63,7 +63,6 @@ public class StatisticsFragment extends Fragment {
         happinessGraph = (GraphView) view.findViewById(R.id.happiness_graph);
 
         energyGraph.getViewport().setYAxisBoundsManual(true);
-        energyGraph.getViewport().setMinY(0);
         energyGraph.getViewport().setMaxY(100);
         energyGraph.addSeries(energySeries);
 
@@ -97,10 +96,12 @@ public class StatisticsFragment extends Fragment {
         DataPoint fitnessData = new DataPoint(t, statValues[2]);
         DataPoint happinessData = new DataPoint(t, statValues[3]);
 
-        energySeries.appendData(energyData,true,40);
-        hungerSeries.appendData(hungerData,true,40);
-        fitnessSeries.appendData(fitnessData,true,40);
-        happinessSeries.appendData(happinessData,true,40);
+        energySeries.appendData(energyData, false, 40);
+        hungerSeries.appendData(hungerData, false, 40);
+        fitnessSeries.appendData(fitnessData, false, 40);
+        happinessSeries.appendData(happinessData, false, 40);
+
+
 
         //Create the series object from the array and add to graph
 
