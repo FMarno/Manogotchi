@@ -1,7 +1,5 @@
 package com.example.fsm.manogotchi;
 
-import android.content.Intent;
-import android.media.Image;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -44,7 +42,8 @@ public class Person {
 
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
-    public enum Consumable {FRUIT(0,5,5,2), CHOCOLATE(5,10,10,-10), COFFEE(20, 0, 5, 0), VODKA(-20,-30, 30, 0);
+    public enum Consumable {
+        APPLE(0, 30, 5, 2), CHOCOLATE(5, 10, 10, -10), COFFEE(20, 0, 5, 0), VODKA(0, -30, 30, 0);
 
         private int energyFactor;
         private int hungerFactor;
@@ -93,11 +92,16 @@ public class Person {
     }
 
     public void doSomething(){
+
+        if (age == 1) {
+            consume(Consumable.VODKA);
+
+        }
         //this is what the pupil will fill out
         if (hunger < 50){
             System.out.println("ate fruit");
             while (hunger < 80) {
-                consume(Consumable.FRUIT);
+                consume(Consumable.APPLE);
             }
         }
         if (happiness < 20){
@@ -114,6 +118,7 @@ public class Person {
     }
 
     public int runHour(){
+
         recordState();
         checkLife();
         if (!alive){
@@ -126,10 +131,12 @@ public class Person {
             return 0;
         }
 
-        decayPerson();
+
 
         //run pupil suggestion
         doSomething();
+        decayPerson();
+
         age++;
         checkLife();
         return 1;
@@ -157,10 +164,10 @@ public class Person {
         //hangover
         Integer hangover = affects.get(Affect.HANGOVER);
         if (hangover != null){
-            if (comedown.equals(0)){
+            if (hangover.equals(0)) {
                 affects.remove(Affect.HANGOVER);
             } else {
-                affects.put(Affect.HANGOVER, (comedown-1));
+                affects.put(Affect.HANGOVER, (hangover - 1));
                 if (hangover < 5){
                     System.out.println("hangover");
                     changeHunger(-10);
@@ -223,6 +230,7 @@ public class Person {
     }
 
     private void consume(Consumable food) {
+        System.out.println(age + ": " + food);
         changeEnergy(food.getEnergyFactor());
         changeHunger(food.getHungerFactor());
         changeHappiness(food.getHappinessFactor());

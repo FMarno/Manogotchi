@@ -49,7 +49,8 @@ public class TabContainerFragment extends Fragment {
     }
 
     public void addToGraph(int stats[]){
-        ((StatisticsFragment)mPages.get(2)).addToGraph(stats);
+       
+        ((StatisticsFragment) mPages.get(2)).addToGraph(stats);
     }
 
     public void addFoodStuff(MainActivity context, String name, String desc) {
