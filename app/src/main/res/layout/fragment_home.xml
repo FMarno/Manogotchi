@@ -5,11 +5,11 @@
     android:orientation="vertical"
     tools:context="com.example.fsm.manogotchi.HomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="40sp" />
+    <!-- <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="@string/hello_blank_fragment"
+         android:textSize="40sp" />-->
 
     <ImageView
         android:src="@drawable/unilogo"
