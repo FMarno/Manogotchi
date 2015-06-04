@@ -2,6 +2,11 @@ package com.example.fsm.manogotchi;
 
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v4.app.*;
 import android.os.Bundle;
 
@@ -12,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener{
+public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener{
 
     private Person jim;
+    private float[] gravity = {0,0,0};
+    private double gravMag = 0;
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,10 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         jim = new Person();
         jim.refreshImage(img);
         updateStatBars(jim);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_GAME);
 
 
     }
@@ -115,4 +128,34 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         fitnessBar.setProgress(jim.getFitness());
         happinessBar.setProgress(jim.getHappiness());
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // In this example, alpha is calculated as t / (t + dT),
+        // where t is the low-pass filter's time-constant and
+        // dT is the event delivery rate.
+        // final float alpha = 0.8f;
+        // Isolate the force of gravity with the low-pass filter.
+
+        final float alpha = 0.8f;
+
+        gravity[0] = Math.abs(event.values[0]);
+        gravity[1] = Math.abs(event.values[1]);
+        gravity[2] = Math.abs(event.values[2]);
+
+        gravMag = Math.sqrt((double)gravity[0] + (double)gravity[1] + (double)gravity[2]) - Math.sqrt(9.80665);
+
+        if (gravMag > 3){
+            jim.changeFitness(1);
+            updateStatBars(jim);
+            System.out.println("shake it off");
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
 }

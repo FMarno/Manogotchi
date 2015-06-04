@@ -296,7 +296,7 @@ public class Person {
         }
     }
 
-    private void changeFitness(int amount){
+    public void changeFitness(int amount){
         int newT = fitness + amount;
         if (newT < 0){
             fitness = 0;
