@@ -62,6 +62,16 @@ public class StatisticsFragment extends Fragment {
         fitnessGraph = (GraphView) view.findViewById(R.id.fitness_graph);
         happinessGraph = (GraphView) view.findViewById(R.id.happiness_graph);
 
+        DataPoint energyData = new DataPoint(0, 100);
+        DataPoint hungerData = new DataPoint(0, 100);
+        DataPoint fitnessData = new DataPoint(0, 100);
+        DataPoint happinessData = new DataPoint(0, 100);
+
+        energySeries.appendData(energyData, false, 40);
+        hungerSeries.appendData(hungerData, false, 40);
+        fitnessSeries.appendData(fitnessData, false, 40);
+        happinessSeries.appendData(happinessData, false, 40);
+
         energyGraph.getViewport().setYAxisBoundsManual(true);
         energyGraph.getViewport().setMaxY(100);
         energyGraph.addSeries(energySeries);

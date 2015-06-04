@@ -23,9 +23,9 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
         TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
 
-        tabs.addFoodStuff("Apple", "Healthy af");
-        tabs.addFoodStuff("Cocaine", "Deadly af");
-        tabs.addFoodStuff("Cake", "It's a lie!");
+       /* tabs.addFoodStuff(this, "Apple", "Healthy af");
+        tabs.addFoodStuff(this, "Cocaine", "Deadly af");
+        tabs.addFoodStuff(this, "Cake", "It's a lie!");*/
 
         ImageView img = (ImageView) findViewById(R.id.android_figure);
         //Create test person
