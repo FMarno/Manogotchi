@@ -1,7 +1,5 @@
 package com.example.fsm.manogotchi;
 
-import android.app.FragmentManager;
-
 import android.os.Bundle;
 import android.support.v4.app.*;
 import android.support.v4.view.*;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 
 public class TabContainerFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final int NUM_TABS = 2;
+    private static final int NUM_TABS = 3;
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -29,6 +27,7 @@ public class TabContainerFragment extends Fragment {
 
         mPages.add(new HomeFragment());
         mPages.add(new StatisticsFragment());
+        mPages.add(new FoodFragment());
 
 
     }
@@ -52,6 +51,9 @@ public class TabContainerFragment extends Fragment {
 
     public void addToGraph(int stats[]){
         ((StatisticsFragment)mPages.get(1)).addToGraph(stats);
+    }
+    public void addFoodStuff(String name, String desc){
+        ((FoodFragment)mPages.get(2)).addFoodStuff(name,desc);
     }
 
     private class ContentSliderPagerAdapter extends FragmentStatePagerAdapter{

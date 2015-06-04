@@ -20,6 +20,13 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        setTheme(android.R.style.Theme_Holo);
+
+        TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
+
+        tabs.addFoodStuff("Apple", "Healthy af");
+        tabs.addFoodStuff("Cocaine", "Deadly af");
+        tabs.addFoodStuff("Cake", "It's a lie!");
+
         ImageView img = (ImageView) findViewById(R.id.android_figure);
         //Create test person
         jim = new Person();
