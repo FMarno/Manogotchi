@@ -1,7 +1,10 @@
 package com.example.fsm.manogotchi;
 
+
+import android.app.ActionBar;
 import android.support.v4.app.*;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +18,8 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        setTheme(android.R.style.Theme_Holo);
+
 
         //Create test person
         jim = new Person();
