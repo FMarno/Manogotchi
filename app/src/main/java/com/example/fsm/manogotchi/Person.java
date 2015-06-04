@@ -91,20 +91,20 @@ public class Person {
         age = 0;
     }
 
-    public void doSomething(){
+    public void doSomething() {
 
         if (age == 1) {
             consume(Consumable.VODKA);
 
         }
         //this is what the pupil will fill out
-        if (hunger < 50){
+        if (hunger < 50) {
             System.out.println("ate fruit");
             while (hunger < 80) {
                 consume(Consumable.APPLE);
             }
         }
-        if (happiness < 20){
+        if (happiness < 20) {
             System.out.println("ate chocolate");
             consume(Consumable.CHOCOLATE);
         }
@@ -112,25 +112,24 @@ public class Person {
             System.out.println("worked out");
             doActivity(Activity.WORKOUT);
         }
-        if (energy < 20){
+        if (energy < 20) {
             sleep(4);
         }
     }
 
-    public int runHour(){
+    public int runHour() {
 
         recordState();
         checkLife();
-        if (!alive){
+        if (!alive) {
             checkLife();
             return -1;
         }
 
-        if (checkAffects() == 0){
+        if (checkAffects() == 0) {
             checkLife();
             return 0;
         }
-
 
 
         //run pupil suggestion
@@ -142,20 +141,20 @@ public class Person {
         return 1;
     }
 
-    private int checkAffects(){
+    private int checkAffects() {
         //update activities list
 
         //comedown
         Integer comedown = affects.get(Affect.COMEDOWN);
-        if (comedown != null){
-            if (comedown.equals(0)){
+        if (comedown != null) {
+            if (comedown.equals(0)) {
                 changeHunger(-2);
                 changeEnergy(-25);
                 changeHappiness(-2);
                 changeFitness(-1);
                 affects.remove(Affect.COMEDOWN);
             } else {
-                affects.put(Affect.COMEDOWN, (comedown-1));
+                affects.put(Affect.COMEDOWN, (comedown - 1));
                 System.out.println("coffee buzz");
                 return 1;
             }
@@ -163,12 +162,12 @@ public class Person {
 
         //hangover
         Integer hangover = affects.get(Affect.HANGOVER);
-        if (hangover != null){
+        if (hangover != null) {
             if (hangover.equals(0)) {
                 affects.remove(Affect.HANGOVER);
             } else {
                 affects.put(Affect.HANGOVER, (hangover - 1));
-                if (hangover < 5){
+                if (hangover < 5) {
                     System.out.println("hangover");
                     changeHunger(-10);
                     changeEnergy(-10);
@@ -207,10 +206,10 @@ public class Person {
 
     }
 
-    private void decayPerson(){
-        double changeInHunger = (0.1*hunger) + (0.05*(100-energy)) + (0.1*(Math.abs(50-fitness)));
+    private void decayPerson() {
+        double changeInHunger = (0.1 * hunger) + (0.05 * (100 - energy)) + (0.1 * (Math.abs(50 - fitness)));
         double changeInEnergy = (0.1 * energy) + (0.1 * (100 - hunger)) + (0.2 * (100 - happiness)) + (0.2 * (100 - fitness)) + (age * 100 / 1753160);
-        double changeInHappiness = (0.1*(100-happiness)) + (0.1*(100-hunger)) + (0.05*(100-energy)) + (0.05*(100-fitness));
+        double changeInHappiness = (0.1 * (100 - happiness)) + (0.1 * (100 - hunger)) + (0.05 * (100 - energy)) + (0.05 * (100 - fitness));
         double changeInFitness = (0.1 * (100 - fitness)) + (0.2 * (100 - hunger)) + (0.07 * (100 - energy)) + (age * 100 / 1753160);
 
         changeHunger(-1 * (int) Math.round(changeInHunger));
@@ -219,7 +218,7 @@ public class Person {
         changeFitness(-1 * (int) Math.round(changeInHunger));
     }
 
-    private void checkLife(){
+    private void checkLife() {
         if (hunger == 0 || energy == 0 || fitness == 0 || happiness == 0) {
             alive = false;
         }
@@ -236,15 +235,19 @@ public class Person {
         changeHappiness(food.getHappinessFactor());
         changeFitness(food.getFitnessFactor());
 
-        switch (food){
-            case VODKA: {affects.put(Affect.HANGOVER,10); break;}
-            case COFFEE: {affects.put(Affect.COMEDOWN,2);}
+        switch (food) {
+            case VODKA: {
+                affects.put(Affect.HANGOVER, 10);
+                break;
+            }
+            case COFFEE: {
+                affects.put(Affect.COMEDOWN, 2);
+            }
         }
-
     }
 
-    private void doActivity(Activity activity){
-        switch (activity){
+    private void doActivity(Activity activity) {
+        switch (activity) {
             case WORKOUT: {
                 changeFitness(20);
                 changeEnergy(-20);
@@ -252,55 +255,56 @@ public class Person {
                 changeHunger(-20);
                 return;
             }
-            case WATCH_TV:{
+            case WATCH_TV: {
                 changeFitness(-5);
                 changeEnergy(0);
                 changeHappiness(5);
                 changeHunger(0);
                 return;
             }
-            default:return;
+            default:
+                return;
         }
     }
 
-    private void changeEnergy(int amount){
+    private void changeEnergy(int amount) {
         int newT = energy + amount;
-        if (newT < 0){
+        if (newT < 0) {
             energy = 0;
-        } else if (newT > 100){
+        } else if (newT > 100) {
             energy = 100;
         } else {
             energy = newT;
         }
     }
 
-    private void changeHunger(int amount){
+    private void changeHunger(int amount) {
         int newT = hunger + amount;
-        if (newT < 0){
+        if (newT < 0) {
             hunger = 0;
-        } else if (newT > 100){
+        } else if (newT > 100) {
             hunger = 100;
         } else {
             hunger = newT;
         }
     }
 
-    private void changeHappiness(int amount){
+    private void changeHappiness(int amount) {
         int newT = happiness + amount;
-        if (newT < 0){
+        if (newT < 0) {
             happiness = 0;
-        } else if (newT > 100){
+        } else if (newT > 100) {
             happiness = 100;
         } else {
             happiness = newT;
         }
     }
 
-    private void changeFitness(int amount){
+    private void changeFitness(int amount) {
         int newT = fitness + amount;
-        if (newT < 0){
+        if (newT < 0) {
             fitness = 0;
-        } else if (newT > 100){
+        } else if (newT > 100) {
             fitness = 100;
         } else {
             fitness = newT;
@@ -315,7 +319,7 @@ public class Person {
         return happiness > 70;
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return alive;
     }
 
@@ -375,7 +379,7 @@ public class Person {
         return energy_stats;
     }
 
-    public void print(){
-        System.out.println("Age: " + age + "\nenergy: " + energy + "\thunger: " + hunger + "\nhappiness: " + happiness + "\t fitness: " + fitness);
+    public void print() {
+        System.out.println("Age: " + age + "\n energy: " + energy + "\t hunger: " + hunger + "\n happiness: " + happiness + "\t fitness: " + fitness);
     }
 }
