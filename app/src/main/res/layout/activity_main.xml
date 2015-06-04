@@ -116,6 +116,7 @@
             android:text="@string/test_button" />
 
         <ImageView
+            android:id="@+id/android_figure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/default_android" />

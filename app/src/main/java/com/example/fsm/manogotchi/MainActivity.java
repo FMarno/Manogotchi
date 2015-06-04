@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener{
@@ -19,8 +20,7 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        setTheme(android.R.style.Theme_Holo);
-
-
+        ImageView img = (ImageView) findViewById(R.id.android_figure);
         //Create test person
         jim = new Person();
 
