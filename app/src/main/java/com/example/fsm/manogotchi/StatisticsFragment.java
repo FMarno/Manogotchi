@@ -89,13 +89,14 @@ public class StatisticsFragment extends Fragment {
 
 
         //graph.getViewport().setScalable(true);
+        t++;
 
         //Create a DataPoint array which plots the stats against time
         DataPoint energyData = new DataPoint(t, statValues[0]);
         DataPoint hungerData = new DataPoint(t, statValues[1]);
         DataPoint fitnessData = new DataPoint(t, statValues[2]);
         DataPoint happinessData = new DataPoint(t, statValues[3]);
-        t++;
+
         energySeries.appendData(energyData,true,40);
         hungerSeries.appendData(hungerData,true,40);
         fitnessSeries.appendData(fitnessData,true,40);

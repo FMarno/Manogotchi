@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Manogotchi</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Manogothci</string>
+
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -10,6 +11,5 @@
     <string name="happiness_label">Happiness</string>
     <string name="test_button">Test</string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Welcome to our app!</string>
 </resources>

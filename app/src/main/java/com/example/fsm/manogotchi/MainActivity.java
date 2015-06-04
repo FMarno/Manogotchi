@@ -24,13 +24,6 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         //Create test person
         jim = new Person();
 
-        // Add hunger stats to graph
-        //addToGraph(jim.getHungerStats(), R.id.graph);
-       // addToGraph(jim.getFitnessStats(), R.id.fitness);
-       // addToGraph(jim.getEnergyStats(), R.id.energy);
-        //addToGraph(jim.getHappinessStats(), R.id.happiness);
-
-
     }
 
     //Method to add a stat set against time to graph
@@ -64,9 +57,10 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         super.onAttachFragment(fragment);
     }
 
+    //Event handler for the Test button click
     public void testBars(View view) {
 
-
+        //Updating Progressbars and the graphs
         ProgressBar energyBar = (ProgressBar) findViewById(R.id.energy_bar);
         ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hunger_bar);
         ProgressBar fitnessBar = (ProgressBar) findViewById(R.id.fitness_bar);
@@ -80,6 +74,7 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
         TabContainerFragment tabs = (TabContainerFragment)getSupportFragmentManager().findFragmentById(R.id.tab_container);
 
+        //Passing on the stats to the statistics fragment to update the graphs
         int[] stats = {jim.getEnergy(), jim.getHunger(), jim.getFitness(), jim.getHappiness()};
 
         tabs.addToGraph(stats);
