@@ -42,7 +42,7 @@ public class Person {
 
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
-    public enum Consumable {
+    public static enum Consumable {
         APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.chocolate), VODKA(0, -30, 30, 0, R.drawable.beer);
 
         private int energyFactor;
@@ -232,7 +232,7 @@ public class Person {
         affects.put(Affect.SLEEP, time);
     }
 
-    private void consume(Consumable food) {
+    public void consume(Consumable food) {
         System.out.println(age + ": " + food);
         changeEnergy(food.getEnergyFactor());
         changeHunger(food.getHungerFactor());

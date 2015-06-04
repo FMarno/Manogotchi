@@ -1,7 +1,5 @@
 package com.example.fsm.manogotchi;
 
-
-import android.app.ActionBar;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener{
+public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener, FoodFragment.OnFoodClickListener{
 
     private Person jim;
     private float[] gravity = {0,0,0};
@@ -148,4 +146,8 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     }
 
 
+    @Override
+    public void consumeFood(Person.Consumable food) {
+        jim.consume(food);
+    }
 }
