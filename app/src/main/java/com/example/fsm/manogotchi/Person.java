@@ -43,19 +43,21 @@ public class Person {
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
     public enum Consumable {
-        APPLE(0, 30, 5, 2), CHOCOLATE(5, 10, 10, -10), COFFEE(20, 0, 5, 0), VODKA(0, -30, 30, 0);
+        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.chocolate), VODKA(0, -30, 30, 0, R.drawable.beer);
 
         private int energyFactor;
         private int hungerFactor;
         private int happinessFactor;
         private int fitnessFactor;
+        private int image;
 
 
-        Consumable(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor) {
+        Consumable(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor, int image) {
             this.energyFactor = energyFactor;
             this.hungerFactor = hungerFactor;
             this.happinessFactor = happinessFactor;
             this.fitnessFactor = fitnessFactor;
+            this.image = image;
         }
 
         public int getEnergyFactor() {
@@ -73,6 +75,8 @@ public class Person {
         public int getFitnessFactor() {
             return fitnessFactor;
         }
+
+        public int getImage() {return image; }
     }
 
     public Person(int energy, int hunger, int happiness, int fitness, int age) {
