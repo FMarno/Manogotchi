@@ -53,10 +53,6 @@ public class TabContainerFragment extends Fragment {
         ((StatisticsFragment) mPages.get(2)).addToGraph(stats);
     }
 
-    public void addFoodStuff(MainActivity context, String name, String desc) {
-        ((FoodFragment) mPages.get(1)).addFoodStuff(context, name, desc);
-    }
-
     private class ContentSliderPagerAdapter extends FragmentStatePagerAdapter{
 
         public ContentSliderPagerAdapter(android.support.v4.app.FragmentManager fm) {

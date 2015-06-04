@@ -22,13 +22,7 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         setContentView(R.layout.activity_main);
 //        setTheme(android.R.style.Theme_Holo);
 
-        TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
-
         ImageView img = (ImageView) findViewById(R.id.android_figure);
-
-       /* tabs.addFoodStuff(this, "Apple", "Healthy af");
-        tabs.addFoodStuff(this, "Cocaine", "Deadly af");
-        tabs.addFoodStuff(this, "Cake", "It's a lie!");*/
 
         //Create test person
         jim = new Person();
@@ -37,10 +31,6 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
 
     }
-
-    //Method to add a stat set against time to graph
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
