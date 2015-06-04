@@ -13,9 +13,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener{
 
@@ -111,6 +115,33 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         }
     }
 
+    public void testBars(){
+        ImageView img = (ImageView) findViewById(R.id.android_figure);
+
+        if (jim.isAlive()) {
+
+
+            jim.runHour();
+
+            updateStatBars(jim);
+
+            jim.refreshImage(img);
+
+
+            TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
+
+            //Passing on the stats to the statistics fragment to update the graphs
+            int[] stats = {jim.getEnergy(), jim.getHunger(), jim.getFitness(), jim.getHappiness()};
+
+            tabs.addToGraph(stats);
+        } else {
+            img.setImageResource(R.drawable.dead_android);
+            Toast toast = Toast.makeText(getApplicationContext(), "You died!!!", Toast.LENGTH_LONG);
+            toast.show();
+
+        }
+    }
+
     @Override
     public int[] getStatistics() {
         return new int[0];
@@ -155,6 +186,31 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+
+    private boolean timerOn = false;
+
+    public void startTimer(View view) {
+        final Timer timer = new Timer();
+        if (!timerOn) {
+            class TimedButton extends TimerTask {
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            testBars();
+                        }
+                    });
+                    if (!jim.isAlive()){
+                        timer.cancel();
+                    }
+                }
+            }
+            timer.scheduleAtFixedRate(new TimedButton(), 0, 1000);
+        } else {
+            timer.cancel();
+        }
     }
 
 

@@ -110,10 +110,19 @@
 
         </RelativeLayout>
         <Button
+            android:id="@id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="testBars"
             android:text="@string/test_button" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/test"
+            android:onClick="startTimer"
+            android:text="@string/timer"/>
+
 
         <ImageView
             android:id="@+id/android_figure"
