@@ -26,9 +26,8 @@ public class TabContainerFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mPages.add(new HomeFragment());
-        mPages.add(new StatisticsFragment());
         mPages.add(new FoodFragment());
-
+        mPages.add(new StatisticsFragment());
 
     }
 

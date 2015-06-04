@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener{
 
@@ -23,13 +24,17 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
         TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
 
+        ImageView img = (ImageView) findViewById(R.id.android_figure);
+
        /* tabs.addFoodStuff(this, "Apple", "Healthy af");
         tabs.addFoodStuff(this, "Cocaine", "Deadly af");
         tabs.addFoodStuff(this, "Cake", "It's a lie!");*/
 
-        ImageView img = (ImageView) findViewById(R.id.android_figure);
         //Create test person
         jim = new Person();
+        jim.refreshImage(img);
+        updateStatBars(jim);
+
 
     }
 
@@ -67,28 +72,47 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     //Event handler for the Test button click
     public void testBars(View view) {
 
-        //Updating Progressbars and the graphs
-        ProgressBar energyBar = (ProgressBar) findViewById(R.id.energy_bar);
-        ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hunger_bar);
-        ProgressBar fitnessBar = (ProgressBar) findViewById(R.id.fitness_bar);
-        ProgressBar happinessBar = (ProgressBar) findViewById(R.id.happiness_bar);
+        ImageView img = (ImageView) findViewById(R.id.android_figure);
 
-        jim.runHour();
-        energyBar.setProgress(jim.getEnergy());
-        hungerBar.setProgress(jim.getHunger());
-        fitnessBar.setProgress(jim.getFitness());
-        happinessBar.setProgress(jim.getHappiness());
+        if (jim.isAlive()) {
 
-        TabContainerFragment tabs = (TabContainerFragment)getSupportFragmentManager().findFragmentById(R.id.tab_container);
 
-        //Passing on the stats to the statistics fragment to update the graphs
-        int[] stats = {jim.getEnergy(), jim.getHunger(), jim.getFitness(), jim.getHappiness()};
+            jim.runHour();
 
-        tabs.addToGraph(stats);
+            updateStatBars(jim);
+
+            jim.refreshImage(img);
+
+
+            TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
+
+            //Passing on the stats to the statistics fragment to update the graphs
+            int[] stats = {jim.getEnergy(), jim.getHunger(), jim.getFitness(), jim.getHappiness()};
+
+            tabs.addToGraph(stats);
+        } else {
+            img.setImageResource(R.drawable.dead_android);
+            Toast toast = Toast.makeText(getApplicationContext(), "You died!!!", Toast.LENGTH_LONG);
+            toast.show();
+
+        }
     }
 
     @Override
     public int[] getStatistics() {
         return new int[0];
+    }
+
+    public void updateStatBars(Person jim) {
+        ProgressBar energyBar = (ProgressBar) findViewById(R.id.energy_bar);
+        ProgressBar hungerBar = (ProgressBar) findViewById(R.id.hunger_bar);
+        ProgressBar fitnessBar = (ProgressBar) findViewById(R.id.fitness_bar);
+        ProgressBar happinessBar = (ProgressBar) findViewById(R.id.happiness_bar);
+
+
+        energyBar.setProgress(jim.getEnergy());
+        hungerBar.setProgress(jim.getHunger());
+        fitnessBar.setProgress(jim.getFitness());
+        happinessBar.setProgress(jim.getHappiness());
     }
 }

@@ -1,6 +1,8 @@
 package com.example.fsm.manogotchi;
 
 import android.content.Intent;
+import android.media.Image;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,19 @@ public class Person {
 
     private boolean alive = true;
     private HashMap<Affect, Integer> affects = new HashMap<Affect, Integer>();
+
+    public void refreshImage(ImageView img) {
+
+        if (isSad()) {
+            img.setImageResource(R.drawable.sad_android);
+        } else if (isHappy()) {
+            img.setImageResource(R.drawable.happy_android);
+        } else if (!isAlive()) {
+            img.setImageResource(R.drawable.dead_android);
+        } else {
+            img.setImageResource(R.drawable.default_android);
+        }
+    }
 
     public enum Activity {WORKOUT, WATCH_TV}
 
@@ -102,10 +117,12 @@ public class Person {
         recordState();
         checkLife();
         if (!alive){
+            checkLife();
             return -1;
         }
 
         if (checkAffects() == 0){
+            checkLife();
             return 0;
         }
 
@@ -114,6 +131,7 @@ public class Person {
         //run pupil suggestion
         doSomething();
         age++;
+        checkLife();
         return 1;
     }
 
@@ -184,14 +202,14 @@ public class Person {
 
     private void decayPerson(){
         double changeInHunger = (0.1*hunger) + (0.05*(100-energy)) + (0.1*(Math.abs(50-fitness)));
-        double changeInEnergy = (0.1*energy) + (0.1*(100-hunger)) + (0.2*(100-happiness)) + (0.2*(100-fitness)) + (age/1753160);
+        double changeInEnergy = (0.1 * energy) + (0.1 * (100 - hunger)) + (0.2 * (100 - happiness)) + (0.2 * (100 - fitness)) + (age * 100 / 1753160);
         double changeInHappiness = (0.1*(100-happiness)) + (0.1*(100-hunger)) + (0.05*(100-energy)) + (0.05*(100-fitness));
-        double changeInFitness = (0.1*(100-fitness)) + (0.2*(100-hunger)) + (0.07*(100-energy)) + (age/1753160);
+        double changeInFitness = (0.1 * (100 - fitness)) + (0.2 * (100 - hunger)) + (0.07 * (100 - energy)) + (age * 100 / 1753160);
 
-        changeHunger(-1*(int)Math.round(changeInHunger));
-        changeEnergy(-1*(int)Math.round(changeInHunger));
-        changeHappiness(-1*(int)Math.round(changeInHunger));
-        changeFitness(-1*(int)Math.round(changeInHunger));
+        changeHunger(-1 * (int) Math.round(changeInHunger));
+        changeEnergy(-1 * (int) Math.round(changeInHunger));
+        changeHappiness(-1 * (int) Math.round(changeInHunger));
+        changeFitness(-1 * (int) Math.round(changeInHunger));
     }
 
     private void checkLife(){
@@ -279,6 +297,14 @@ public class Person {
         } else {
             fitness = newT;
         }
+    }
+
+    public boolean isSad() {
+        return happiness < 30;
+    }
+
+    public boolean isHappy() {
+        return happiness > 70;
     }
 
     public boolean isAlive(){
