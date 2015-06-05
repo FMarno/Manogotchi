@@ -211,4 +211,12 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         }
     }
 
+    public void reset(View view) {
+    }
+
+    public void onAIToggleClicked(View view) {
+    }
+
+    public void onTimerToggleClicked(View view) {
+    }
 }

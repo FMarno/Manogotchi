@@ -16,4 +16,8 @@
     <string name="reset">Reset</string>
     <string name="statistics_title">Statistics</string>
     <string name="food_title">Consumables</string>
+    <string name="toggle_ai_on">AI</string>
+    <string name="toggle_ai_off">Manual</string>
+    <string name="toggle_timer_on">Timing On</string>
+    <string name="toggle_timer_off">Timing Off</string>
 </resources>
