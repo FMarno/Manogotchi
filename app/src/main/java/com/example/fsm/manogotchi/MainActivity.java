@@ -220,4 +220,10 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
         tabs.resetGraphs();
     }
+
+    public void onAIToggleClicked(View view) {
+    }
+
+    public void onTimerToggleClicked(View view) {
+    }
 }

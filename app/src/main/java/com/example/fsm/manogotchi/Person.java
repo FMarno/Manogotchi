@@ -43,7 +43,7 @@ public class Person {
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
     public static enum Consumable {
-        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.chocolate), VODKA(0, -30, 30, 0, R.drawable.beer);
+        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer);
 
         private int energyFactor;
         private int hungerFactor;
@@ -98,7 +98,7 @@ public class Person {
     public void doSomething() {
 
         if (age == 1) {
-            consume(Consumable.VODKA);
+            consume(Consumable.BEER);
 
         }
         //this is what the pupil will fill out
@@ -240,7 +240,7 @@ public class Person {
         changeFitness(food.getFitnessFactor());
 
         switch (food) {
-            case VODKA: {
+            case BEER: {
                 affects.put(Affect.HANGOVER, 10);
                 break;
             }

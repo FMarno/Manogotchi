@@ -130,6 +130,21 @@
             android:onClick="reset"
             android:text="@string/reset" />
 
+        <ToggleButton
+            android:id="@+id/ai_toggle_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textOn="@string/toggle_ai_on"
+            android:textOff="@string/toggle_ai_off"
+            android:onClick="onAIToggleClicked"/>
+        <ToggleButton
+            android:id="@+id/timer_toggle_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textOn="@string/toggle_timer_on"
+            android:textOff="@string/toggle_timer_off"
+            android:onClick="onTimerToggleClicked"/>
+
 
         <ImageView
             android:id="@+id/android_figure"
