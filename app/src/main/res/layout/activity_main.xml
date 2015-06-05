@@ -120,13 +120,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/test"
-            android:onClick="startTimer"
-            android:text="@string/timer"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/test"
             android:onClick="reset"
             android:text="@string/reset" />
 
@@ -153,6 +146,12 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:src="@drawable/default_android" />
+        <TextView
+            android:id="@+id/age_counter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/title_margin_bottom"/>
 
     </LinearLayout>
     <View

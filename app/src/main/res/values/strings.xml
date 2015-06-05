@@ -9,10 +9,10 @@
     <string name="hunger_label">Hunger</string>
     <string name="fitness_label">Fitness</string>
     <string name="happiness_label">Happiness</string>
-    <string name="test_button">Test</string>
+    <string name="test_button">Advance Time</string>
     <string name="timer">Timer</string>
 
-    <string name="home_welcome_text">d\'agjkigajakafjohjgfoshgo\;lwhg\;alkh\;lrhkwkhnf\;lkhjb\;lkgh\;okjhjahlfkjghklgkjha. hkjahgpgo[rgig[paihg[iohg[o</string>
+    <string name="home_welcome_text">Welcome to Manogotchi! This a simple Android application developed by a few interns at the School of Computer Science to demonstrate basic programming concepts in the Java programming language as well as some Android specific features. Have fun!</string>
     <string name="reset">Reset</string>
     <string name="statistics_title">Statistics</string>
     <string name="food_title">Consumables</string>

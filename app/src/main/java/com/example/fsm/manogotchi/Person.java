@@ -7,10 +7,12 @@ import java.util.HashMap;
 
 
 /**
- * Created by finlay on 01/06/15.
+ * A simple Java class representing a person with a few basic attributes such as age, energy, hunger, happiness and fitness.
+ * <p>Through various methods one may manipulate the person's life such as making them eat, drink or exercise.</p>
  */
 public class Person {
 
+    //Fields that will represent the individual attributes of a person
     private int energy;
     private int hunger;
     private int happiness;
@@ -25,6 +27,7 @@ public class Person {
     private boolean alive = true;
     private HashMap<Affect, Integer> affects = new HashMap<Affect, Integer>();
 
+    /**Method that adjusts the android figure according to the person's mood*/
     public void refreshImage(ImageView img) {
 
         if (isSad()) {
@@ -42,7 +45,11 @@ public class Person {
 
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
-    public static enum Consumable {
+    /**
+     * Enumeration containing all the consumables that will be available from the Consumables tab in the application.
+     * <p>The enum values represent energy-, hunger-, happiness- and fitness modifiers and the icon link respectively.</p>
+     */
+    public enum Consumable {
         APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer);
 
         private int energyFactor;
@@ -79,6 +86,7 @@ public class Person {
         public int getImage() {return image; }
     }
 
+    /**Constructor with custom starting values*/
     public Person(int energy, int hunger, int happiness, int fitness, int age) {
         this.energy = energy;
         this.hunger = hunger;
@@ -87,6 +95,7 @@ public class Person {
         this.age = age;
     }
 
+    /**Constructor starting with fixed values*/
     public Person() {
         energy = 70;
         hunger = 70;
@@ -95,6 +104,7 @@ public class Person {
         age = 0;
     }
 
+    /**AI function. Anything that comes here will be automatically executed every tick or after every 'Advance' button click if AI is toggle on.*/
     public void doSomething() {
 
         if (age == 1) {
@@ -121,7 +131,8 @@ public class Person {
         }
     }
 
-    public int runHour() {
+    /**Method that is called after every tick in time or manual button press.*/
+    public int advanceTime(boolean useAI) {
 
         recordState();
         checkLife();
@@ -137,13 +148,16 @@ public class Person {
 
 
         //run pupil suggestion
-        //doSomething();
+        if(useAI) doSomething();
+
         decayPerson();
 
         age++;
         checkLife();
         return 1;
     }
+
+    //The functions below control more complicated life functions and effects
 
     private int checkAffects() {
         //update activities list
@@ -315,6 +329,8 @@ public class Person {
             fitness = newT;
         }
     }
+
+    //Getters and Setters for the class
 
     public boolean isSad() {
         return happiness < 30;
