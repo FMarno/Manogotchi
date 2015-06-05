@@ -51,7 +51,6 @@ public class Person {
      */
     public enum Consumable {
         APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer);
-
         private int energyFactor;
         private int hungerFactor;
         private int happinessFactor;
