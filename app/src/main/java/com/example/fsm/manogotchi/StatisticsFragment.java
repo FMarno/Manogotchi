@@ -20,7 +20,10 @@ public class StatisticsFragment extends Fragment {
     LineGraphSeries<DataPoint> hungerSeries;
     LineGraphSeries<DataPoint> fitnessSeries;
     LineGraphSeries<DataPoint> happinessSeries;
+
     int t = 0;
+
+    final int MAX_DATA_POINTS = 120;
 
     public interface OnChangeListener{
         public int[] getStatistics();
@@ -83,10 +86,10 @@ public class StatisticsFragment extends Fragment {
         DataPoint fitnessData = new DataPoint(t, statValues[2]);
         DataPoint happinessData = new DataPoint(t, statValues[3]);
 
-        energySeries.appendData(energyData, false, 40);
-        hungerSeries.appendData(hungerData, false, 40);
-        fitnessSeries.appendData(fitnessData, false, 40);
-        happinessSeries.appendData(happinessData, false, 40);
+        energySeries.appendData(energyData, false, MAX_DATA_POINTS);
+        hungerSeries.appendData(hungerData, false, MAX_DATA_POINTS);
+        fitnessSeries.appendData(fitnessData, false, MAX_DATA_POINTS);
+        happinessSeries.appendData(happinessData, false, MAX_DATA_POINTS);
 
 
     }

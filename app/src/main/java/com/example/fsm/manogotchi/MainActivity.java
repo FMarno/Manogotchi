@@ -215,10 +215,16 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     }
 
     public void reset(View view) {
+
         jim = new Person();
+
         updateStatBars(jim);
+
         TabContainerFragment tabs = (TabContainerFragment) getSupportFragmentManager().findFragmentById(R.id.tab_container);
         tabs.resetGraphs();
+
+        ImageView img = (ImageView) findViewById(R.id.android_figure);
+        jim.refreshImage(img);
     }
 
     public void onAIToggleClicked(View view) {
