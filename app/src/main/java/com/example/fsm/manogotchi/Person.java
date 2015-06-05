@@ -137,7 +137,7 @@ public class Person {
 
 
         //run pupil suggestion
-        doSomething();
+        //doSomething();
         decayPerson();
 
         age++;
@@ -248,6 +248,7 @@ public class Person {
                 affects.put(Affect.COMEDOWN, 2);
             }
         }
+
 
     }
 

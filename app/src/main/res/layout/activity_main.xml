@@ -123,6 +123,13 @@
             android:onClick="startTimer"
             android:text="@string/timer"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/test"
+            android:onClick="reset"
+            android:text="@string/reset" />
+
 
         <ImageView
             android:id="@+id/android_figure"

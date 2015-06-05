@@ -167,10 +167,11 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         gravMag = Math.sqrt((double)gravity[0] + (double)gravity[1] + (double)gravity[2]) - Math.sqrt(9.80665);
 
         if (gravMag > 3){
-            jim.changeFitness(1);
+            jim.changeFitness(5);
             updateStatBars(jim);
             System.out.println("shake it off");
         }
+
     }
 
     @Override
@@ -197,14 +198,17 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
                     }
                 }
             }
-            timer.scheduleAtFixedRate(new TimedButton(), 0, 1000);
+            timer.scheduleAtFixedRate(new TimedButton(), 0, 5000);
         } else {
             timer.cancel();
         }
     }
     @Override
     public void consumeFood(Person.Consumable food) {
-        jim.consume(food);
+        if (jim.isAlive()) {
+            jim.consume(food);
+            updateStatBars(jim);
+        }
     }
 
 }
