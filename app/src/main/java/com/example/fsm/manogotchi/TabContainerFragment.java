@@ -53,6 +53,10 @@ public class TabContainerFragment extends Fragment {
         ((StatisticsFragment) mPages.get(2)).addToGraph(stats);
     }
 
+    public void resetGraphs() {
+        ((StatisticsFragment) mPages.get(2)).resetGraphs();
+    }
+
     private class ContentSliderPagerAdapter extends FragmentStatePagerAdapter{
 
         public ContentSliderPagerAdapter(android.support.v4.app.FragmentManager fm) {
