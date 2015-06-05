@@ -43,7 +43,7 @@ public class Person {
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
     public static enum Consumable {
-        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer);
+        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer), SLEEP(0,0,0,0, R.drawable.sleep);
 
         private int energyFactor;
         private int hungerFactor;
@@ -126,12 +126,12 @@ public class Person {
         recordState();
         checkLife();
         if (!alive){
-            checkLife();
             return -1;
         }
 
         if (checkAffects() == 0) {
             checkLife();
+            decayPerson();
             return 0;
         }
 
@@ -246,6 +246,9 @@ public class Person {
             }
             case COFFEE: {
                 affects.put(Affect.COMEDOWN, 2);
+            }
+            case SLEEP: {
+                sleep(1);
             }
         }
 
