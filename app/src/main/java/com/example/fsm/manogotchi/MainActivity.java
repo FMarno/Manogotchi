@@ -1,11 +1,7 @@
 package com.example.fsm.manogotchi;
 
 
-import android.app.ActionBar;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,21 +12,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener, FoodFragment.OnFoodClickListener{
+public class MainActivity extends FragmentActivity implements StatisticsFragment.OnChangeListener, SensorEventListener, FoodFragment.OnFoodClickListener {
 
     private Person jim;
-    private float[] gravity = {0,0,0};
+    private float[] gravity = {0, 0, 0};
     private double gravMag = 0;
     private SensorManager mSensorManager;
     private Sensor mSensor;
+    private boolean usingAI = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,7 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         if (jim.isAlive()) {
 
 
-            jim.runHour();
+            jim.advanceTime(usingAI);
 
             updateStatBars(jim);
 
@@ -108,13 +106,13 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         }
     }
 
-    public void testBars(){
+    public void testBars() {
         ImageView img = (ImageView) findViewById(R.id.android_figure);
 
         if (jim.isAlive()) {
 
 
-            jim.runHour();
+            jim.advanceTime(usingAI);
 
             updateStatBars(jim);
 
@@ -133,11 +131,6 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
             toast.show();
 
         }
-    }
-
-    @Override
-    public int[] getStatistics() {
-        return new int[0];
     }
 
     public void updateStatBars(Person jim) {
@@ -167,9 +160,9 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         gravity[1] = Math.abs(event.values[1]);
         gravity[2] = Math.abs(event.values[2]);
 
-        gravMag = Math.sqrt((double)gravity[0] + (double)gravity[1] + (double)gravity[2]) - Math.sqrt(9.80665);
+        gravMag = Math.sqrt((double) gravity[0] + (double) gravity[1] + (double) gravity[2]) - Math.sqrt(9.80665);
 
-        if (gravMag > 3){
+        if (gravMag > 3) {
             jim.changeFitness(5);
             updateStatBars(jim);
             System.out.println("shake it off");
@@ -182,12 +175,12 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
     }
 
+    private Timer timer = new Timer();
 
-    private boolean timerOn = false;
+    public void startTimer(boolean timerOn) {
 
-    public void startTimer(View view) {
-        final Timer timer = new Timer();
         if (!timerOn) {
+            timer = new Timer();
             class TimedButton extends TimerTask {
                 public void run() {
                     runOnUiThread(new Runnable() {
@@ -196,16 +189,17 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
                             testBars();
                         }
                     });
-                    if (!jim.isAlive()){
+                    if (!jim.isAlive()) {
                         timer.cancel();
                     }
                 }
             }
-            timer.scheduleAtFixedRate(new TimedButton(), 0, 5000);
+            timer.scheduleAtFixedRate(new TimedButton(), 0, 3000);
         } else {
             timer.cancel();
         }
     }
+
     @Override
     public void consumeFood(Person.Consumable food) {
         if (jim.isAlive()) {
@@ -225,11 +219,37 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
 
         ImageView img = (ImageView) findViewById(R.id.android_figure);
         jim.refreshImage(img);
+
+        ToggleButton timeToggler = ((ToggleButton) findViewById(R.id.timer_toggle_button));
+        timeToggler.setChecked(false);
+        onTimerToggleClicked(timeToggler);
     }
 
     public void onAIToggleClicked(View view) {
+        boolean isOn = ((ToggleButton) view).isChecked();
+
+        if (isOn) {
+            usingAI = true;
+        } else {
+            usingAI = false;
+        }
     }
 
+
     public void onTimerToggleClicked(View view) {
+        boolean isOn = ((ToggleButton) view).isChecked();
+
+        if (isOn) {
+            findViewById(R.id.test).setEnabled(false);
+            startTimer(false);
+        } else {
+            findViewById(R.id.test).setEnabled(true);
+            startTimer(true);
+        }
+    }
+
+    @Override
+    public void setAccurateAge(int age) {
+        ((TextView)findViewById(R.id.age_counter)).setText("Age: " + age + " hours");
     }
 }

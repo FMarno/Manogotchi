@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args){
 //        Person jim = new Person();
 //        jim.print();
-//        while (jim.runHour() != -1){
+//        while (jim.advanceTime() != -1){
 //            jim.print();
 //            System.out.println();
 //        }

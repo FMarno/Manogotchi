@@ -26,7 +26,7 @@ public class StatisticsFragment extends Fragment {
     final int MAX_DATA_POINTS = 120;
 
     public interface OnChangeListener{
-        public int[] getStatistics();
+        public void setAccurateAge(int age);
     }
 
     private GraphView energyGraph;
@@ -91,6 +91,7 @@ public class StatisticsFragment extends Fragment {
         fitnessSeries.appendData(fitnessData, false, MAX_DATA_POINTS);
         happinessSeries.appendData(happinessData, false, MAX_DATA_POINTS);
 
+        mCallback.setAccurateAge(t);
 
     }
 
@@ -137,6 +138,8 @@ public class StatisticsFragment extends Fragment {
         happinessGraph.getViewport().setMinY(0);
         happinessGraph.getViewport().setMaxY(100);
         happinessGraph.addSeries(happinessSeries);
+
+        mCallback.setAccurateAge(t);
 
     }
 
