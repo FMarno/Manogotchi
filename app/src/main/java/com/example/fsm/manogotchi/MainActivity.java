@@ -222,8 +222,6 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0);
     }
-    public void reset(View view) {
-    }
 
     public void onAIToggleClicked(View view) {
     }
