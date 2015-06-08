@@ -41,17 +41,16 @@ public class Person {
         }
     }
 
-    public enum Activity {WORKOUT, WATCH_TV}
-
     public enum Affect {SLEEP, COMEDOWN, HANGOVER}
 
     /**
-     * Enumeration containing all the consumables that will be available from the Consumables tab in the application.
+     * Enumeration containing all the consumables that will be available from the Actions tab in the application.
      * <p>The enum values represent energy-, hunger-, happiness- and fitness modifiers and the icon link respectively.</p>
      */
-    public enum Consumable {
+    public enum Action {
         APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate),
-        COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer), COKE(0, -10, 20, -5, R.drawable.coke);
+        COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer), COKE(0, -10, 20, -5, R.drawable.coke),
+        WORKOUT(-20, -10, 10, 30, R.drawable.cherry), WATCH_TV(0, 0, 10, -10, R.drawable.cherry);
 
         private int energyFactor;
         private int hungerFactor;
@@ -60,7 +59,7 @@ public class Person {
         private int image;
 
 
-        Consumable(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor, int image) {
+        Action(int energyFactor, int hungerFactor, int happinessFactor, int fitnessFactor, int image) {
             this.energyFactor = energyFactor;
             this.hungerFactor = hungerFactor;
             this.happinessFactor = happinessFactor;
@@ -107,11 +106,15 @@ public class Person {
 
     /**AI function. Anything that comes here will be automatically executed every tick or after every 'Advance' button click if AI is toggle on.*/
     public void doSomething() {
-        if (hunger < 40) consume(Consumable.APPLE);
-        if (energy < 40) consume(Consumable.COFFEE);
+        if (hunger < 40) {
+            doAction(Action.APPLE);
+        }
+        if (energy < 40) {
+            doAction(Action.COFFEE);
+        }
         if (fitness < 40) {
             for (int i = 0; i < 10; i++) {
-                consume(Consumable.APPLE);
+                doAction(Action.APPLE);
             }
         }
     }
@@ -216,9 +219,9 @@ public class Person {
         double changeInFitness = (0.1 * (100 - fitness)) + (0.2 * (100 - hunger)) + (0.07 * (100 - energy)) + (age * 100 / 1753160);
 
         changeHunger(-1 * (int) Math.round(changeInHunger));
-        changeEnergy(-1 * (int) Math.round(changeInHunger));
-        changeHappiness(-1 * (int) Math.round(changeInHunger));
-        changeFitness(-1 * (int) Math.round(changeInHunger));
+        changeEnergy(-1 * (int) Math.round(changeInEnergy));
+        changeHappiness(-1 * (int) Math.round(changeInHappiness));
+        changeFitness(-1 * (int) Math.round(changeInFitness));
     }
 
     private void checkLife() {
@@ -231,7 +234,7 @@ public class Person {
         affects.put(Affect.SLEEP, time);
     }
 
-    public void consume(Consumable food) {
+    public void doAction(Action food) {
         System.out.println(age + ": " + food);
         changeEnergy(food.getEnergyFactor());
         changeHunger(food.getHungerFactor());
@@ -249,26 +252,6 @@ public class Person {
         }
 
 
-    }
-
-    private void doActivity(Activity activity) {
-        switch (activity) {
-            case WORKOUT: {
-                changeFitness(20);
-                changeEnergy(-20);
-                changeHappiness(15);
-                changeHunger(-20);
-                return;
-            }
-            case WATCH_TV:{
-                changeFitness(-5);
-                changeEnergy(0);
-                changeHappiness(5);
-                changeHunger(0);
-                return;
-            }
-            default:return;
-        }
     }
 
     private void changeEnergy(int amount){

@@ -1,0 +1,6 @@
+Possible changes
+
+1.reconsider the order of refreshImage so !isAlive() comes first
+
+2. add a fitness consumable/just change the activities to consumables in the
+code
