@@ -15,7 +15,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.example.fsm.manogotchi.Person.Consumable;
+import com.example.fsm.manogotchi.Person.Action;
 
 
 /**
@@ -33,14 +33,14 @@ public class FoodFragment extends Fragment {
     OnFoodClickListener mCallback;
 
     public interface OnFoodClickListener {
-        public void consumeFood(Consumable food);
+        public void consumeFood(Action food);
     }
 
     public FoodFragment() {
         // Required empty public constructor
     }
 
-    public void addFoodStuff(final Consumable food) {
+    public void addFoodStuff(final Action food) {
 
         int paddingInPx = (int)(LIST_ITEM_PADDING_DP * scale + .5f);
 
@@ -95,7 +95,7 @@ public class FoodFragment extends Fragment {
         listContext = container.getContext();
         foodList = (LinearLayout)view.findViewById(R.id.food_list);
         scale = getResources().getDisplayMetrics().density;
-        Consumable[] foodstuffs = Consumable.values();
+        Action[] foodstuffs = Action.values();
 
         for (int i = 0; i<foodstuffs.length;i++){
             addFoodStuff(foodstuffs[i]);

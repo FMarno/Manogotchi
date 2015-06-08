@@ -201,9 +201,9 @@ public class MainActivity extends FragmentActivity implements StatisticsFragment
     }
 
     @Override
-    public void consumeFood(Person.Consumable food) {
+    public void consumeFood(Person.Action food) {
         if (jim.isAlive()) {
-            jim.consume(food);
+            jim.doAction(food);
             updateStatBars(jim);
         }
     }
