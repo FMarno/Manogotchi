@@ -50,7 +50,8 @@ public class Person {
      * <p>The enum values represent energy-, hunger-, happiness- and fitness modifiers and the icon link respectively.</p>
      */
     public enum Consumable {
-        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate), COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer);
+        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate),
+        COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer), COKE(0, -10, 20, -5, R.drawable.coke);
 
         private int energyFactor;
         private int hungerFactor;
@@ -106,28 +107,12 @@ public class Person {
 
     /**AI function. Anything that comes here will be automatically executed every tick or after every 'Advance' button click if AI is toggle on.*/
     public void doSomething() {
-
-        if (age == 1) {
-            consume(Consumable.BEER);
-
-        }
-        //this is what the pupil will fill out
-        if (hunger < 50) {
-            System.out.println("ate fruit");
-            while (hunger < 80) {
+        if (hunger < 40) consume(Consumable.APPLE);
+        if (energy < 40) consume(Consumable.COFFEE);
+        if (fitness < 40) {
+            for (int i = 0; i < 10; i++) {
                 consume(Consumable.APPLE);
             }
-        }
-        if (happiness < 20) {
-            System.out.println("ate chocolate");
-            consume(Consumable.CHOCOLATE);
-        }
-        if (fitness < 60) {
-            System.out.println("worked out");
-            doActivity(Activity.WORKOUT);
-        }
-        if (energy < 20) {
-            sleep(4);
         }
     }
 
