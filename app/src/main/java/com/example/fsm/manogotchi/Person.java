@@ -106,17 +106,7 @@ public class Person {
 
     /**AI function. Anything that comes here will be automatically executed every tick or after every 'Advance' button click if AI is toggle on.*/
     public void doSomething() {
-        if (hunger < 40) {
-            doAction(Action.APPLE);
-        }
-        if (energy < 40) {
-            doAction(Action.COFFEE);
-        }
-        if (fitness < 40) {
-            for (int i = 0; i < 10; i++) {
-                doAction(Action.APPLE);
-            }
-        }
+
     }
 
     /**Method that is called after every tick in time or manual button press.*/
