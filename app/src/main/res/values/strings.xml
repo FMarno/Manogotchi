@@ -15,7 +15,7 @@
     <string name="home_welcome_text">Welcome to Manogotchi! This a simple Android application developed by a few interns at the School of Computer Science to demonstrate basic programming concepts in the Java programming language as well as some Android specific features. Have fun!</string>
     <string name="reset">Reset</string>
     <string name="statistics_title">Statistics</string>
-    <string name="food_title">Consumables</string>
+    <string name="food_title">Actions</string>
     <string name="toggle_ai_on">AI</string>
     <string name="toggle_ai_off">Manual</string>
     <string name="toggle_timer_on">Timing On</string>

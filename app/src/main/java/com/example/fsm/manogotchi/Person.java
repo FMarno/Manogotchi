@@ -122,12 +122,12 @@ public class Person {
         recordState();
         checkLife();
         if (!alive){
-            checkLife();
             return -1;
         }
 
         if (checkAffects() == 0) {
             checkLife();
+            decayPerson();
             return 0;
         }
 
