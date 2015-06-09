@@ -48,9 +48,10 @@ public class Person {
      * <p>The enum values represent energy-, hunger-, happiness- and fitness modifiers and the icon link respectively.</p>
      */
     public enum Action {
-        APPLE(0, 30, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate),
-        COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer), COKE(0, -10, 20, -5, R.drawable.coke),
-        WORKOUT(-20, -10, 10, 30, R.drawable.workout), WATCH_TV(0, 0, 10, -10, R.drawable.watch_tv);
+        APPLE(0, 20, 5, 2, R.drawable.apple), CHOCOLATE(5, 10, 10, -10, R.drawable.chocolate),
+        COFFEE(20, 0, 5, 0, R.drawable.coffee), BEER(0, -30, 30, 0, R.drawable.beer),
+        WORKOUT(-20, -10, 10, 30, R.drawable.workout), WATCH_TV(0, 0, 10, -10, R.drawable.tv),
+        BED(30,-10,-10,-10,R.drawable.bed);
 
         private int energyFactor;
         private int hungerFactor;
